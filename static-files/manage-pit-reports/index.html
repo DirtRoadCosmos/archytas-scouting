@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" manifest="offline.manifest.php">
+  <head>
+    <title>Prematch Scouting Report</title>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://cdn.glitch.com/9243aa46-39ce-412a-b6dd-c06c90dd77e4%2Ffavicon-16x16.png?v=1581214118705"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!--
+
+== BOOTSTRAP DOCS ==
+https://getbootstrap.com/docs/4.4/components/alerts/
+
+
+== PIT SCOUTING ==
+team number
+picture of robot
+robot weight
+trench ability
+climb ability
+can they level
+which port they can shoot to
+
+
+
+== MATCH SCOUTING ==
+team number, 
+match number, 
+preferred starting position , 
+balls scored in auto, 
+balls picked up in auto, 
+if high ball, 
+if low ball, 
+inner high ball, 
+under trench run, 
+control panel, 
+how times they fill up the ports, 
+how many balls scored (if possible how many in inner port) 
+situational awareness, 
+score in endgame, 
+if they can climb, 
+if they can balance (list other team(s) they balance with, 
+critical failure, red card, yellow card.
+
+== MENTOR TODO ==
+- markers on range input
+- fix dropdown that doesn't populate
+- cap the robot weight and only allow numbers
+
+-->
+
+    <div id="container">
+<!--       <div class="d-flex flex-row-reverse">
+        <div class="p-2 font-weight-light font-italic">not logged in</div>
+      </div> -->
+      <div id="home-div">
+        <a href="/" class="btn btn-outline-danger btn-block mt-3 mb-3">
+          Go Home
+        </a>
+      </div>
+      <div id="the-section-with-questions">
+        <h1 class="display-4">
+          Pit Scouting Form
+        </h1>
+        <form>
+          <div class="form-group">
+            <label for="numBox" class="form-label">Team</label>
+            <select id="numBox" class="form-control">
+              <option selected disabled hidden>Choose one ...</option>
+            </select>
+          </div>
+          <!--           <div class="form-group">
+            <label for="exampleFormControlFile1">Robot Image:</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="exampleFormControlFile1"
+            />
+            <img
+              id="robotImage"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Question_mark_grey.svg/137px-Question_mark_grey.svg.png"
+              height="200px"
+            />
+          </div> -->
+          <div class="form-group">
+            <label for="weight" class="col-form-label">Robot Weight</label>
+            <input
+              class="form-control"
+              id="weightBox"
+              type="text"
+              placeholder=""
+            />
+          </div>
+
+        
+          <div class="form-group">
+            <label class="form-label">Climb</label><br />
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input type="radio" name="climb_radio" id="climb1" value="4" />
+                Yes
+              </label>
+              <label class="btn btn-outline-primary">
+                <input type="radio" name="climb_radio" id="climb2" value="1" />
+                No
+              </label>
+              <label class="btn btn-outline-primary">
+                <input type="radio" name="climb_radio" id="climb3" value="2" />
+                Sometimes
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Switch Level</label><br />
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="switch_radio"
+                  id="switch1"
+                  value="4"
+                />
+                Yes
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="switch_radio"
+                  id="switch2"
+                  value="1"
+                />
+                No
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="switch_radio"
+                  id="switch3"
+                  value="2"
+                />
+                Sometimes
+              </label>
+            </div>
+          </div>
+       
+          <!--           <div class="form-group">
+            <label for="checkbox" class="form-label">Switch Slide?</label><br />
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheck3"
+              />
+              <label class="custom-control-label" for="customCheck3"
+                >Active</label
+              >
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheck4"
+              />
+              <label class="custom-control-label" for="customCheck4"
+                >Passive</label
+              >
+            </div>
+          </div> -->
+          <div class="form-group">
+            <label class="form-label">Trench</label><br />
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="trench_radio"
+                  id="trench1"
+                  value="2"
+                />
+                Yes
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="trench_radio"
+                  id="trench2"
+                  value="1"
+                />
+                No
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Color Wheel</label><br />
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="wheel_radio"
+                  id="wheel1"
+                  value="2"
+                />
+                Yes
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="wheel_radio"
+                  id="wheel2"
+                  value="1"
+                />
+                No
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Ball Ability</label><br />
+            <div class="btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input type="checkbox" name="ball_ability_checkbox" value="1" />
+                Low Goal
+              </label>
+              <label class="btn btn-outline-primary">
+                <input type="checkbox" name="ball_ability_checkbox" value="2" />
+                High Goal
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Shooter Distance</label><br />
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="shooter_distance_radio"
+                  id="shooter1"
+                  value="1"
+                />
+                Close
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="shooter_distance_radio"
+                  id="shooter2"
+                  value="2"
+                />
+                Medium
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="shooter_distance_radio"
+                  id="shooter3"
+                  value="4"
+                />
+                Far
+              </label>
+            </div>
+          </div>
+           <div class="form-group">
+            <label class="form-label">Drive Train</label><br />
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="drive_train_radio"
+                  id="drive1"
+                  value="1"
+                />
+                Regular
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="drive_train_radio"
+                  id="drive2"
+                  value="2"
+                />
+                Pneumatic
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="drive_train_radio"
+                  id="drive3"
+                  value="4"
+                />
+                Mecanum
+              </label>
+              <label class="btn btn-outline-primary">
+                <input
+                  type="radio"
+                  name="drive_train_radio"
+                  id="drive4"
+                  value="8"
+                />
+                Omni
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1" class="form-label"
+              >Extra Notes:</label
+            >
+            <textarea class="form-control" id="notesBox" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="nameBox" class="form-label">Your Name:</label>
+            <select id="nameBox" class="form-control">
+              <option selected disabled hidden>Choose one ...</option>
+            </select>
+          </div>
+
+          <button
+            id="createQr"
+            type="submit"
+            class="btn btn-outline-danger btn-block"
+          >
+            Create QR Code
+          </button>
+          <br />
+          <div id="qrcode" class="text-center w-100 d-flex">
+            
+          </div>
+          <br />
+          <button
+            id="insertButton"
+            type="submit"
+            class="btn btn-outline-danger btn-block invisible"
+          >
+            Submit Report
+          </button>
+        </form>
+      </div>
+      <div id="the-section-after-pressing-submit">
+        <h1 id="after-title" class="display-4 text-danger">
+          Something went wrong...
+        </h1>
+        <p id="after-status"></p>
+        <a href="/manage-pit-reports/" class="btn btn-outline-danger btn-block">
+          Make Another Scouting Report
+        </a>
+        <a href="/view-scouting/" class="btn btn-outline-danger btn-block">
+          View Reports
+        </a>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/qrcode.min.js"></script>
+    <script src="client.js"></script>
+    
+  </body>
+</html>
