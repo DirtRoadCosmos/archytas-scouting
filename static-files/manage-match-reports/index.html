@@ -1,0 +1,427 @@
+<html>
+  <head>
+    <title>Match Scouting</title>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://cdn.glitch.com/9243aa46-39ce-412a-b6dd-c06c90dd77e4%2Ffavicon-16x16.png?v=1581214118705"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- == MATCH SCOUTING ==
+    team number, 
+    match number,   I have a different idea for these two
+starting position , 
+balls scored in auto,   counter
+balls picked up in auto,   counter
+if high ball,   counter
+if low ball,   counter
+inner high ball,   counter
+under trench run, ✓
+control panel, 
+how times they fill up the ports,   counter
+how many balls scored (if possible how many in inner port)   counter - could we have the system add up overall balls scored without having this be its own catagory
+situational awareness,   slider
+score in endgame, ✓
+ this can be joined with score in endgame, jsut about how we desplay it     if they can climb, ✓
+if they can balance (list other team(s) they balance with, 
+critical failure, red card, yellow card.
+
+== MENTOR TODO ==
+- markers on range input
+- fix dropdown that doesn't populate
+- cap the robot weight and only allow numbers 
+https://www.codementor.io/@jamesezechukwu/how-to-create-a-simple-counter-using-javascript-html-css-bxcjgbbxa
+-->
+
+    <div id="container">
+      <!--       <div class="d-flex flex-row-reverse">
+        <div class="p-2 font-weight-light font-italic">not logged in</div>
+      </div> -->
+      <div id="home-div">
+        <a href="/" class="btn btn-outline-danger btn-block mt-3 mb-3">
+          Go Home
+        </a>
+      </div>
+      <div id="the-section-with-questions">
+        <h1 class="display-4">Granite State<br />Week 1</h1>
+        <h1 class="display-5">
+          Match Scouting
+        </h1>
+        <form>
+                    <div id="eventBoxDiv" class="form-group">
+            <label for="eventBox" class="form-label">Event:</label>
+            <select id="eventBox" class="form-control">
+              <option selected disabled hidden>Choose one ...</option>
+            </select>
+          </div>
+
+          <div id="scoutBox" class="form-group">
+            <label for="nameBox" class="form-label">Scout:</label>
+            <select id="nameBox" class="form-control">
+              <option selected disabled hidden>Choose one ...</option>
+            </select>
+          </div>
+          <div id="matchBoxDiv" class="form-group invisible">
+            <label for="matchBox" class="form-label">Match</label>
+            <select id="matchBox" class="form-control">
+              <option selected disabled hidden>Choose one ...</option>
+            </select>
+          </div>
+
+          <div id="teamBoxDiv" class="form-group invisible">
+            <label for="teamBox" class="form-label">Team</label> <span id="teamsWarningSpan" class="invisible text-danger"></span>
+            <select id="teamBox" class="form-control">
+              <option selected disabled hidden>Choose one ...</option>
+            </select>
+          </div>
+          <div id="fullFormDiv" class="invisible">
+            <div class="form-group">
+              <label for="startingPositionBox" class="col-form-label"
+                >Starting Position</label
+              >
+              <br />
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="form-label">Interface</label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="starting_radio"
+                    id="start1"
+                    value="1"
+                  />
+                  Left
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="starting_radio"
+                    id="start2"
+                    value="2"
+                  />
+                  Center
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="starting_radio"
+                    id="start3"
+                    value="4"
+                  />
+                  Right
+                </label> 
+                   <label class="form-label">Port</label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="starting_radio"
+                    id="start4"
+                    value="8"
+                  />
+                  Left
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="starting_radio"
+                    id="start5"
+                    value="16"
+                  />
+                  Center
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="starting_radio"
+                    id="start6"
+                    value="32"
+                  />
+                  Right
+                </label>
+              </div>
+            </div>
+            <h1 class="display-5">
+              Autonomous
+            </h1>
+            <div class="form-group">
+              <label
+                id="inner_high_auto_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                High Hole(Inner)</label
+              > <label
+                id="inner_high_auto_minus_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                -</label
+              >
+              <div id="inner_high_auto_balls">
+                0
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                id="high_auto_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                High Port</label
+              >
+                <label
+                id="high_auto_minus_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                -</label
+              >
+              <div id="high_auto_balls">
+                0
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                id="low_auto_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                Low Port</label
+              >
+                 <label
+                id="low_auto_minus_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                -</label
+              >
+              <div id="low_auto_balls">
+                0
+              </div>
+            </div>
+            <h1 class="display-5">
+              Tele-Op
+            </h1>
+            <div class="form-group">
+              <label
+                id="inner_high_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                High Hole(Inner)</label
+              >
+              <label
+                id="inner_high_minus_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                -</label
+              >
+              <div id="inner_high_balls">
+                0
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                id="high_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                High Port</label
+              >
+              <label
+                id="high_minus_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                -</label
+              >
+              <div id="high_balls">
+                0
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                id="low_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                Low Port</label
+              ><label
+                id="low_minus_button"
+                class="btn btn-outline-primary"
+                type="button"
+              >
+                 -</label
+              >
+              <div id="low_balls">
+                0
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Trench</label><br />
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="trench_radio"
+                    id="trench1"
+                    value="2"
+                  />
+                  Yes
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="radio"
+                    name="trench_radio"
+                    id="trench2"
+                    value="1"
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Control Panel</label><br />
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="checkbox"
+                    name="control_panel_checkbox"
+                    value="1"
+                  />
+                  Tri-spin
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="checkbox"
+                    name="control_panel_checkbox"
+                    value="2"
+                  />
+                  To-color Spin
+                </label>
+              </div>
+            </div>
+            <h1 class="display-5">
+              Endgame
+            </h1>
+            <div class="form-group">
+              <label class="form-label">End Position</label><br />
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary">
+                  <input type="checkbox" name="endposition_checkbox" value="4" />
+                  Climb
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input type="checkbox" name="endposition_checkbox" value="2" />
+                  Level
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input type="checkbox" name="endposition_checkbox" value="1" />
+                  Floor
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Aggression</label><br />
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="checkbox"
+                    name="aggression_checkbox"
+                    value="1"
+                  />
+                  Mild
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="checkbox"
+                    name="aggression_checkbox"
+                    value="2"
+                  />
+                  Moderate
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="checkbox"
+                    name="aggression_checkbox"
+                    value="4"
+                  />
+                  Severe
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input
+                    type="checkbox"
+                    name="aggression_checkbox"
+                    value="8"
+                  />
+                  Yellow Flag
+                </label>
+                <label class="btn btn-outline-primary">
+                  <input type="checkbox" name="aggression_checkbox" value="16" />
+                  Red Flag
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Extra Notes:</label
+              >
+              <textarea class="form-control" id="notesBox" rows="3"></textarea>
+            </div>
+
+            <button
+              id="insertButton"
+              type="submit"
+              class="btn btn-outline-danger btn-block"
+            >
+              Submit Report
+            </button>
+          </div>
+        </form>
+      </div>
+      <div id="the-section-after-pressing-submit">
+        <h1 id="after-title" class="display-4 text-danger">
+          Something went wrong...
+        </h1>
+        <p id="after-status"></p>
+        <a href="/manage-pit-reports/" class="btn btn-outline-danger btn-block">
+          Make Another Scouting Report
+        </a>
+        <a href="/view-scouting/" class="btn btn-outline-danger btn-block">
+          View Reports
+        </a>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="client.js"></script>
+  </body>
+</html>
