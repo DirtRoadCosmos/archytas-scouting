@@ -1,8 +1,11 @@
 <html>
   <head>
     <title>My Sketch</title>
-        <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <link
       rel="icon"
       type="image/png"
@@ -20,32 +23,42 @@
   </head>
   <body>
     <div id="container">
-                  <div id="home-div">
+      <div id="home-div">
         <a href="/" class="btn btn-outline-danger btn-block mt-3 mb-3">
           Go Home
-        </a>        
+        </a>
       </div>
       <h1 class="display-4">
         Manage Scouts
       </h1>
-      
-       <div class="form-group">
-            <label for="weight" class="col-form-label">Scout Name</label>
-            <input
-              class="form-control"
-              id="scout-name"
-              type="text"
-              placeholder=""
-            />
-          </div>
 
- <br>
-      <button id="insertButton" class="btn btn-outline-success btn-block">Insert into database</button>
-<br>
-    
-     
-      <br>
+      <div class="form-group">
+        <label for="weight" class="col-form-label">Scout Name</label>
+        <input
+          class="form-control"
+          id="scout-name"
+          type="text"
+          placeholder=""
+        />
+      </div>
+
+      <br />
+      <button id="insertButton" class="btn btn-outline-success btn-block">
+        Insert into database
+      </button>
+      <br />
       <div id="status"></div>
+      <hr />
+
+      <br />
+      <h5 class="display-5">
+        Scouts
+      </h5>
+      <div id="scoutDiv"></div>
+
+      <hr />
+
+      <br />
     </div>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -62,6 +75,6 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
-        <script src="client.js"></script>
+    <script src="client.js"></script>
   </body>
 </html>

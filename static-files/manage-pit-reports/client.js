@@ -58,7 +58,7 @@ $(document).ready(() => {
     type: "GET",
     dataType: "json",
     success: data => {
-      console.log("You received some data!", data);
+      console.log("You received some data!", JSON.stringify(data));
       $.each(data, function(i, item) {
         $("#numBox").append(
           $("<option>", {
@@ -75,7 +75,7 @@ $(document).ready(() => {
     type: "GET",
     dataType: "json",
     success: data => {
-      console.log("You received some data!", data);
+      console.log("You received some data!", JSON.stringify(data));
       $.each(data, function(i, item) {
         $("#nameBox").append(
           $("<option>", {

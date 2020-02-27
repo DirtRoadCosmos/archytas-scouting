@@ -1,19 +1,10 @@
 /* globals $ */
 
 $(document).ready(() => {
-  $("#allScoutsButton").click(() => {
-    $.ajax({
-      url: "/user/",
-      type: "GET",
-      dataType: "json",
-      success: data => {
-        console.log("You received some data!", data);
-        $("#status").html("All scouts: " + data);
-      }
-    });
-  });
+  loadScoutList();
 
   $("#insertButton").click(() => {
+    $("#status").html("");
     $.ajax({
       // all URLs are relative to http://localhost:3000/
       url: "/user/",
@@ -24,6 +15,7 @@ $(document).ready(() => {
       success: data => {
         $("#status").html(data.message);
         $("#scout-name").val("");
+        loadScoutList();
       }
     });
   });
@@ -34,3 +26,20 @@ $(document).ready(() => {
     $("#status").html("Error: unknown ajaxError!");
   });
 });
+
+function loadScoutList() {
+  $.ajax({
+    url: "/user/",
+    type: "GET",
+    dataType: "json",
+    success: data => {
+      console.log("You received some data!", data);
+      $("#scoutDiv").html("");
+      $.each(data, function(i, scout) {
+        var scoutData = " - " + scout.name + "<br>";
+        $("#scoutDiv").append(scoutData);
+      });
+      console.log(JSON.stringify(data))
+    }
+  });
+}

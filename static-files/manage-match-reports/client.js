@@ -1,4 +1,4 @@
-/* globals $ FormData */
+ /* globals $ FormData */
 
 $(document).ready(() => {
   // $("#matchBoxDiv").addClass("invisible");
